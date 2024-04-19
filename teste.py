@@ -1,10 +1,13 @@
 import pygame as py
 from pygame.locals import *
+from random import randint
+from sys import exit
 
 #cores
-white = (255,255,255)
-black = (0,0,0)
-red = (255,0,0)
+WHITE = (255,255,255)
+BLACK = (0,0,0)
+RED = (255,0,0)
+CYAN = (0,255,255)
 
 #inicializa o módulo, premitindo que seja interpretado
 py.init()
@@ -14,7 +17,7 @@ width = 640
 high = 480
 #determina o tamanho da tela
 screen = py.display.set_mode((width, high))
-
+py.display.set_caption('O JOGO')
 #cria objeto do tipo clock
 clock = py.time.Clock()
 running = True
@@ -23,18 +26,24 @@ running = True
 width_1 = 40
 x_1 = (width/2) - (width_1/2)
 y_1 = (high/2) - (width_1/2)
+
+#desenho do cir_1
+radius = 15
+x_2 = randint(radius, width - radius)
+y_2 = randint(radius, width - radius)
 while running:
     #preenche a tela
-    screen.fill((255,255,255))
+    screen.fill(WHITE)
     #atualiza toda a página
     #py.display.flip()
     #determina o número de frames
     clock.tick(30)
     #percorre os eventos possíveis do pygame
-    for event in py.event.get():
-        #se o evento for o QUIT, para a loop
-        if event.type == py.QUIT:
-           running = False 
+    #for event in py.event.get():
+    event = py.event.poll()
+    #se o evento for o QUIT, para a loop
+    if event.type == py.QUIT:
+        running = False 
     #movimentação (.key dentro de pygame.locals)
     if py.key.get_pressed()[K_a]:
         x_1 = x_1 - 20
@@ -56,7 +65,8 @@ while running:
         y_1 = width - width_1
         
     #objetos na tela    
-    sqr_1 = py.draw.rect(screen, red, (x_1, y_1, width_1, width_1))
+    sqr_1 = py.draw.rect(screen, CYAN, (x_1, y_1, width_1, width_1))
+    cir_1 = py.draw.circle(screen, RED, (x_2, y_2),radius, 0)
     py.display.update()
 
     
